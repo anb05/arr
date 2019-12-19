@@ -86,7 +86,7 @@ int main(int argc, char const** argv)
     std::cout << "dimD = " << dimD << '\n';
     std::cout << "dimF = " << dimF << '\n';
 
-    int iL = 2870;
+    int iL = 2080;
     printf("addr = %i\n", *(addr + iL));
 
     int coefF = 1;
@@ -94,10 +94,18 @@ int main(int argc, char const** argv)
     int coefC = coefD * dimD;
     int coefR = coefC * dimC;
 
+    int siblingR = iL - coefR;
+    int siblingC = iL + coefC;
+    int siblingD = iL + coefD;
+    int siblingF = iL - coefF;
+
     int r = 0;
     int c = 0;
     int d = 0;
     int f = 0;
+
+    if (end <= iL)
+        iL = end;
 
     if (iL < end) {
         while (coefR < iL) {
@@ -116,7 +124,35 @@ int main(int argc, char const** argv)
     }
 
     printf("arr[%i][%i][%i][%i] = %i;\n",r,c,d,f,arr[r][c][d][f]);
+    
 
+
+    r = 0;
+    c = 0;
+    d = 0;
+    f = 0;
+
+    iL = siblingC;
+
+    if (iL < end) {
+        while (coefR < iL) {
+            ++r;
+            iL -=coefR;
+        }
+        while (coefC < iL) {
+            ++c;
+            iL -= coefC;
+        }
+        while (coefD < iL) {
+            ++d;
+            iL -= coefD;
+        }
+        f = iL;
+    }
+    printf("arr[%i][%i][%i][%i] = %i;\n",r,c,d,f,arr[r][c][d][f]);
+
+
+    /*
     for (int cnt = 0; cnt < end; cnt++) {
 
         iL = cnt;
@@ -146,6 +182,10 @@ int main(int argc, char const** argv)
             std::cout << "ERROR !!!!!" << std::endl;
 
     }
+
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+    */
 
     return 0;
 }

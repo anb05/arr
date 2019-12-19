@@ -95,8 +95,8 @@ int main(int argc, char const** argv)
     int coefR = coefC * dimC;
 
     int siblingR = iL - coefR;
-    int siblingC = iL + coefC;
-    int siblingD = iL + coefD;
+    int siblingC = iL - coefC;
+    int siblingD = iL - coefD;
     int siblingF = iL - coefF;
 
     int r = 0;

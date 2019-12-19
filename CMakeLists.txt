@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 set(PROGECT_NAME arr)
 
-project(${PROGECT_NAME})
+project(${PROGECT_NAME} VERSION 0.0.0.1 LANGUAGES C CXX)
 
 set (HEADERS 
     ../arr/helpers.hpp)

@@ -1,14 +1,18 @@
 #include "./helpers.hpp"
 
 #include <iostream>
+#include <cassert>
+#include <string>
 
-int main(int argc, char const** argv)
+int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 {
-    std::string msg {"Learn CMake"};
+    std::string msg {
+        "\n===========================================================\n\n"
+        "Линеаризация многомерного массива\n"
+        "Рассматривается четырёхмерный массив\n" };
     helpers::prinmsg(msg);
 
     std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
 
     int dimR = helpers::dimR;
     int dimC = helpers::dimC;
@@ -20,7 +24,7 @@ int main(int argc, char const** argv)
     int* addr = &arr[0][0][0][0];
     int* start = addr;
 
-    int end = dimR * dimC * dimD * dimF;
+    int end = helpers::size;
 
     for (int i = 0; i < end; i++, ++addr) {
         *addr = i;
@@ -28,6 +32,10 @@ int main(int argc, char const** argv)
 
     addr = start;
 
+    /*
+    msg = "Проверка линеаризации массива";
+    helpers::prinmsg(msg);
+    
     for (int r = 0; r < dimR; r++) {
 
         for (int c = 0; c < dimC; c++) {
@@ -40,7 +48,6 @@ int main(int argc, char const** argv)
 
                     int offset = r * dimC * dimD * dimF + c * dimD * dimF + d * dimF + f;
 
-
                     printf("addr \t\t= %i\n", *(addr + offset));
 
                     printf("offset \t\t= %i\n", offset);
@@ -48,7 +55,8 @@ int main(int argc, char const** argv)
             }
 
         }
-    }
+    } // Конец проверки линеаризации массива.
+    */
 
     /*
     int arr4D[end];
@@ -73,13 +81,8 @@ int main(int argc, char const** argv)
     }
     */
 
-
-
-
-    printf("Size = %i\n", end);
-
-    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+    /*
+    printf("Size = %i\n", helpers::size);
 
     std::cout << "dimR = " << dimR << '\n';
     std::cout << "dimC = " << dimC << '\n';
@@ -151,6 +154,7 @@ int main(int argc, char const** argv)
     }
     printf("arr[%i][%i][%i][%i] = %i;\n",r,c,d,f,arr[r][c][d][f]);
 
+    */
 
     /*
     for (int cnt = 0; cnt < end; cnt++) {
@@ -182,10 +186,109 @@ int main(int argc, char const** argv)
             std::cout << "ERROR !!!!!" << std::endl;
 
     }
+    */
 
     std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+
+    std::cout << "Проверка поиска соседей в четырёхмерном массиве по каждой размерности" << std::endl;
+
+    /*
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+
+
+    std::cout << "Проверка поиска соседей по размерности F" << std::endl;
+
+    int r = 2;
+    int c = 2;
+    int d = 8;
+    int f = 19;
+
+    std::cout << "arr[" << r << "]["
+                        << c << "]["
+                        << d << "]["
+                        << f << "] = "
+                        << arr[r][c][d][f] << '\n';
+
+    int offset = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
+
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+
+    std::cout << "offset = " << offset << '\n';
+
+    f -= 1;
+
+    std::cout << "arr[" << r << "]["
+                        << c << "]["
+                        << d << "]["
+                        << f << "] = "
+                        << arr[r][c][d][f] << '\n';
+
+    offset -= helpers::coefF;
+
+    std::cout << "offset = " << offset << '\n';
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+
     */
+    
+    //[[maybe_unused]] auto [left, right] = helpers::calculateAdjacent(10, helpers::coefD);
+
+    addr = start;
+
+    for (int r = 0; r < dimR; r++) {
+        for (int c = 0; c < dimC; c++) {
+            for (int d = 0; d < dimD; d++) {
+                for (int f = 0; f < dimF; f++) {
+                    //printf("arr[%i][%i][%i][%i] = %i\n",r,c,d,f,arr[r][c][d][f]);
+                    int offset = helpers::coefR * r + 
+                                 helpers::coefC * c +
+                                 helpers::coefD * d +
+                                 helpers::coefF * f;
+
+                    //printf("addr[%li] = %i\n", offset, addr[offset]);
+
+                    assert(arr[r][c][d][f] == addr[offset]);
+
+                    // Check dimF
+                    auto [left, right] = helpers::calculateAdjacent(offset, helpers::coefF);
+
+                    int left_f = (f == 0) ? dimF - 1 : f - 1;
+                    int right_f = (f == (dimF -1)) ? 0 : f + 1;
+
+                    int left_offset_f = helpers::coefR * r +
+                                        helpers::coefC * c +
+                                        helpers::coefD * d +
+                                        helpers::coefF * left_f;
+
+                    int right_offset_f = helpers::coefR * r +
+                                         helpers::coefC * c +
+                                         helpers::coefD * d +
+                                         helpers::coefF * right_f;
+
+                    printf("r = %i\tc = %i\td = %i\tf = %i\n",r,c,d,f);
+                    printf("r = %i\tc = %i\td = %i\tleft_f = %i\n",r,c,d,left_f);
+                    printf("r = %i\tc = %i\td = %i\tright_f = %i\n",r,c,d,right_f);
+                    printf("left_offset_f = %i\n", left_offset_f);
+                    printf("right_offset_f = %i\n", right_offset_f);
+                    printf("offset = %i\n",offset);
+                    printf("left = %li\n", left);
+                    printf("right = %li\n", right);
+
+
+                    std::string ch;
+
+                    while (std::cin >> ch) {
+                        printf("ch = %s\n", ch.c_str());
+                        break;
+                    }
+
+                    //assert(left_offset_f == left);
+                    //assert(right_offset_f == right);
+
+                }
+            }
+        }
+    }
+
 
     return 0;
 }

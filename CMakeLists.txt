@@ -1,15 +1,20 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROGECT_NAME arr)
+set(PR_NAME arr)
+set(PR_VERSION 0.0.0.1)
 
-project(${PROGECT_NAME} VERSION 0.0.0.1 LANGUAGES C CXX)
+project(${PR_NAME} VERSION ${PR_VERSION} LANGUAGES C CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED on)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -g")
 
 set (HEADERS 
     ../arr/helpers.hpp)
 
-set (SOURCES
+set (SRC
     ../arr/helpers.cpp
     ../arr/main.cpp)
 
-add_executable(${PROGECT_NAME} ${HEADERS} ${SOURCES})
+add_executable(${PROJECT_NAME} ${HEADERS} ${SRC})
 

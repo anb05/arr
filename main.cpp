@@ -232,7 +232,19 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
     
     //[[maybe_unused]] auto [left, right] = helpers::calculateAdjacent(10, helpers::coefD);
 
+    printf("Array size = %i\n", helpers::size);
+    //printf("maskF = %x\n", helpers::maskF);
+    //printf("maskD = %x\n", helpers::maskD);
+    //printf("mraskC = %x\n", helpers::maskC);
+    //printf("maskR = %x\n", helpers::maskR);
+
+    //helpers::calculateAdjacent(31, helpers::maskF);
+    //helpers::calculateAdjacent(31, helpers::maskD);
+    //helpers::calculateAdjacent(31, helpers::maskC);
+    //helpers::calculateAdjacent(31, helpers::maskR);
+
     addr = start;
+
 
     for (int r = 0; r < dimR; r++) {
         for (int c = 0; c < dimC; c++) {
@@ -249,12 +261,30 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
                     assert(arr[r][c][d][f] == addr[offset]);
 
                     // Check dimF
-                    auto [left, right] = helpers::calculateAdjacent(offset, helpers::coefF);
+					auto [leftF, rightF] = helpers::calculateAdjacent(offset, helpers::maskF, helpers::coefF);
 
-                    int left_f = (f == 0) ? dimF - 1 : f - 1;
+					// Check dimD
+					auto [leftD, rightD] = helpers::calculateAdjacent(offset, helpers::maskD, helpers::coefD);
+
+					// Check dimC
+					auto [leftC, rightC] = helpers::calculateAdjacent(offset, helpers::maskC, helpers::coefC);
+
+					// Check dimR
+					auto [leftR, rightR] = helpers::calculateAdjacent(offset, helpers::maskR, helpers::coefR);
+
+					int left_f  = (f == 0) ? dimF - 1 : f - 1;
                     int right_f = (f == (dimF -1)) ? 0 : f + 1;
 
-                    int left_offset_f = helpers::coefR * r +
+					int left_d = (d == 0) ? dimD - 1 : d - 1;
+					int right_d = (d == (dimD -1)) ? 0 : d + 1;
+
+					int left_c = (c == 0) ? dimC - 1 : c - 1;
+					int right_c = (c == (dimC -1)) ? 0 : c + 1;
+
+					int left_r = (r == 0) ? dimR - 1 : r - 1;
+					int right_r = (r == (dimR -1)) ? 0 : r + 1;
+
+					int left_offset_f = helpers::coefR * r +
                                         helpers::coefC * c +
                                         helpers::coefD * d +
                                         helpers::coefF * left_f;
@@ -264,31 +294,68 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
                                          helpers::coefD * d +
                                          helpers::coefF * right_f;
 
-                    printf("r = %i\tc = %i\td = %i\tf = %i\n",r,c,d,f);
-                    printf("r = %i\tc = %i\td = %i\tleft_f = %i\n",r,c,d,left_f);
-                    printf("r = %i\tc = %i\td = %i\tright_f = %i\n",r,c,d,right_f);
-                    printf("left_offset_f = %i\n", left_offset_f);
-                    printf("right_offset_f = %i\n", right_offset_f);
-                    printf("offset = %i\n",offset);
-                    printf("left = %li\n", left);
-                    printf("right = %li\n", right);
+					int left_offset_d = helpers::coefR * r +
+										helpers::coefC * c +
+										helpers::coefD * left_d +
+										helpers::coefF * f;
+
+					int right_offset_d = helpers::coefR * r +
+										 helpers::coefC * c +
+										 helpers::coefD * right_d +
+										 helpers::coefF * f;
+
+					int left_offset_c = helpers::coefR * r +
+										helpers::coefC * left_c +
+										helpers::coefD * d +
+										helpers::coefF * f;
+
+					int right_offset_c = helpers::coefR * r +
+										 helpers::coefC * right_c +
+										 helpers::coefD * d +
+										 helpers::coefF * f;
+
+					int left_offset_r = helpers::coefR * left_r +
+										helpers::coefC * c +
+										helpers::coefD * d +
+										helpers::coefF * f;
+
+					int right_offset_r = helpers::coefR * right_r +
+										 helpers::coefC * c +
+										 helpers::coefD * d +
+										 helpers::coefF * f;
+
+//                    printf("r = %i\tc = %i\td = %i\tf = %i\n",r,c,d,f);
+//                    printf("r = %i\tc = %i\td = %i\tleft_f = %i\n",r,c,d,left_f);
+//                    printf("r = %i\tc = %i\td = %i\tright_f = %i\n",r,c,d,right_f);
+//                    printf("left_offset_f = %i\n", left_offset_f);
+//                    printf("right_offset_f = %i\n", right_offset_f);
+//                    printf("offset = %i\n",offset);
+//                    printf("left = %li\n", left);
+//                    printf("right = %li\n", right);
 
 
-                    std::string ch;
+//                    std::string ch;
 
-                    while (std::cin >> ch) {
-                        printf("ch = %s\n", ch.c_str());
-                        break;
-                    }
+//                    while (std::cin >> ch) {
+//                        printf("ch = %s\n", ch.c_str());
+//                        break;
+//                    }
 
-                    //assert(left_offset_f == left);
-                    //assert(right_offset_f == right);
+					assert(left_offset_f == leftF);
+					assert(right_offset_f == rightF);
 
-                }
+					assert(left_offset_d == leftD);
+					assert(right_offset_d == rightD);
+
+					assert(left_offset_c == leftC);
+					assert(right_offset_c == rightC);
+
+					assert(left_offset_r == leftR);
+					assert(right_offset_r == rightR);
+				}
             }
         }
     }
-
 
     return 0;
 }

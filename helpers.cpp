@@ -9,25 +9,18 @@ namespace helpers {
         std::cout << msg << std::endl;
     }
 
-    std::tuple<size_t, size_t> calculateAdjacent(size_t index, size_t coefN, size_t size)
+	std::tuple<size_t, size_t> calculateAdjacent(size_t index,
+												 size_t maskN,
+												 size_t coefN)
     {
-        size_t left {index};
-        size_t right {index};
+        size_t var = index & maskN;
+        size_t clr = index & (~maskN);
 
-        if (index < coefN) {
-            left = size - coefN + index;
-            right = index + coefN;
-        }
-        else {
-            left = index - coefN;
+		size_t var_l = (var - coefN) & maskN;
+		size_t var_r = (var + coefN) & maskN;
 
-            if (index < (size - coefN)) {
-                right = index + coefN;
-            }
-            else {
-                right = coefN - (size - index);
-            }
-        }
+        size_t left  = var_l | clr;
+        size_t right = var_r | clr;
 
         return std::make_tuple(left, right);
     }

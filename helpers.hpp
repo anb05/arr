@@ -3,25 +3,26 @@
 
 #include <string>
 #include <tuple>
+#include <cstdint>
 
 namespace helpers {
 
-	constexpr int dimR = 64;
-	constexpr int dimC = 64;
-    constexpr int dimD = 16;
-    constexpr int dimF = 32;
+	constexpr uint64_t dimR = 4;
+	constexpr uint64_t dimC = 4;
+	constexpr uint64_t dimD = 5;
+	constexpr uint64_t dimF = 16;
 
-    constexpr int size = dimR * dimC * dimD * dimF;
+	constexpr uint64_t size = dimR * dimC * dimD * dimF;
 
-    constexpr int coefF = 1;
-    constexpr int coefD = coefF * dimF;
-    constexpr int coefC = coefD * dimD;
-    constexpr int coefR = coefC * dimC;
+	constexpr uint64_t coefF = 1;
+	constexpr uint64_t coefD = coefF * dimF;
+	constexpr uint64_t coefC = coefD * dimD;
+	constexpr uint64_t coefR = coefC * dimC;
 
-    constexpr int maskF = (dimF - 1) * coefF;
-    constexpr int maskD = (dimD - 1) * coefD;
-    constexpr int maskC = (dimC - 1) * coefC;
-    constexpr int maskR = (dimR - 1) * coefR;
+	constexpr uint64_t maskF = (dimF - 1) * coefF;
+	constexpr uint64_t maskD = (dimD - 1) * coefD;
+	constexpr uint64_t maskC = (dimC - 1) * coefC;
+	constexpr uint64_t maskR = (dimR - 1) * coefR;
 
 
     void prinmsg(const std::string& msg);

@@ -14,51 +14,52 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 
     std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
-	uint32_t dimR = helpers::dimR;
-	uint32_t dimC = helpers::dimC;
-	uint32_t dimD = helpers::dimD;
-	uint32_t dimF = helpers::dimF;
+    int32_t dimR = helpers::dimR;
+    int32_t dimC = helpers::dimC;
+    int32_t dimD = helpers::dimD;
+    int32_t dimF = helpers::dimF;
 
 
-	uint64_t arr[dimR][dimC][dimD][dimF];
-	uint64_t* addr = &arr[0][0][0][0];
-	uint64_t* start = addr;
+    int64_t arr[dimR][dimC][dimD][dimF];
+    int64_t* addr = &arr[0][0][0][0];
+    int64_t* start = addr;
 
-	uint64_t end = helpers::size;
+//    int64_t end = helpers::size;
 
-//	for (uint64_t i = 0; i < end; i++, ++addr) {
+//    for (int64_t i = 0; i < end; i++, ++addr) {
 //        *addr = i;
 //    }
 
-    addr = start;
+//    addr = start;
 
-	printf("coefF = %li\n", helpers::coefF);
-	printf("coefD = %li\n", helpers::coefD);
-	printf("coefC = %li\n", helpers::coefC);
-	printf("coefR = %li\n", helpers::coefR);
+//    printf("coefF = %li\n", helpers::coefF);
+//    printf("coefD = %li\n", helpers::coefD);
+//    printf("coefC = %li\n", helpers::coefC);
+//    printf("coefR = %li\n", helpers::coefR);
 
-    msg = "Проверка линеаризации массива";
-    helpers::prinmsg(msg);
-    
-	for (uint64_t r = 0; r < dimR; r++) {
+//    msg = "Проверка линеаризации массива";
+//    helpers::prinmsg(msg);
 
-		for (uint64_t c = 0; c < dimC; c++) {
-            
-			for (uint64_t d = 0; d < dimD; d++) {
-                
-				for (uint64_t f = 0; f < dimF; f++) {
+    for (int64_t r = 0; r < dimR; r++) {
 
-					arr[r][c][d][f] = r * helpers::dimC * helpers::dimD * helpers::dimF +
-							c * helpers::dimD * helpers::dimF +
-							d * helpers::dimF + f;
-                    
-					printf("arr[%li][%li][%li][%li] = %li;\n",r,c,d,f,arr[r][c][d][f]);
+        for (int64_t c = 0; c < dimC; c++) {
 
-					uint64_t offset = r * dimC * dimD * dimF + c * dimD * dimF + d * dimF + f;
+            for (int64_t d = 0; d < dimD; d++) {
 
-					printf("addr \t\t= %li\n", *(addr + offset));
+                for (int64_t f = 0; f < dimF; f++) {
 
-					printf("offset \t\t= %li\n", offset);
+                    arr[r][c][d][f] =
+                            r * helpers::dimC * helpers::dimD * helpers::dimF+
+                            c * helpers::dimD * helpers::dimF +
+                            d * helpers::dimF + f;
+
+//                    printf("arr[%lu][%lu][%lu][%lu] = %lu;\n",r,c,d,f,arr[r][c][d][f]);
+
+//                    int64_t offset = r * dimC * dimD * dimF + c * dimD * dimF + d * dimF + f;
+
+//                    printf("addr \t\t= %lu\n", *(addr + offset));
+
+//                    printf("offset \t\t= %lu\n", offset);
                 }
             }
 
@@ -66,19 +67,19 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
     } // Конец проверки линеаризации массива.
 
     /*
-	uint64_t arr4D[end];
+    int64_t arr4D[end];
 
 
-	uint64_t cnt = 0;
+    int64_t cnt = 0;
 
-	for (uint64_t r = 0; r < dimR; r++, ++cnt) {
+    for (int64_t r = 0; r < dimR; r++, ++cnt) {
 
-		for (uint64_t c = 0; c < dimC; c++, ++cnt) {
-            
-			for (uint64_t d = 0; d < dimD; d++, ++cnt) {
-                
-				for (uint64_t f = 0; f < dimF; f++, ++cnt) {
-                    
+        for (int64_t c = 0; c < dimC; c++, ++cnt) {
+
+            for (int64_t d = 0; d < dimD; d++, ++cnt) {
+
+                for (int64_t f = 0; f < dimF; f++, ++cnt) {
+
                     arr4D[cnt] = r * dimC * dimD * dimF + c * dimD * dimF + d * dimF + f;
 
                 }
@@ -96,23 +97,23 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
     std::cout << "dimD = " << dimD << '\n';
     std::cout << "dimF = " << dimF << '\n';
 
-	uint64_t iL = 2080;
+    int64_t iL = 2080;
     printf("addr = %i\n", *(addr + iL));
 
-	uint64_t coefF = 1;
-	uint64_t coefD = coefF * dimF;
-	uint64_t coefC = coefD * dimD;
-	uint64_t coefR = coefC * dimC;
+    int64_t coefF = 1;
+    int64_t coefD = coefF * dimF;
+    int64_t coefC = coefD * dimD;
+    int64_t coefR = coefC * dimC;
 
-	uint64_t siblingR = iL - coefR;
-	uint64_t siblingC = iL - coefC;
-	uint64_t siblingD = iL - coefD;
-	uint64_t siblingF = iL - coefF;
+    int64_t siblingR = iL - coefR;
+    int64_t siblingC = iL - coefC;
+    int64_t siblingD = iL - coefD;
+    int64_t siblingF = iL - coefF;
 
-	uint64_t r = 0;
-	uint64_t c = 0;
-	uint64_t d = 0;
-	uint64_t f = 0;
+    int64_t r = 0;
+    int64_t c = 0;
+    int64_t d = 0;
+    int64_t f = 0;
 
     if (end <= iL)
         iL = end;
@@ -134,7 +135,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
     }
 
     printf("arr[%i][%i][%i][%i] = %i;\n",r,c,d,f,arr[r][c][d][f]);
-    
+
 
 
     r = 0;
@@ -164,14 +165,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
     */
 
     /*
-	for (uint64_t cnt = 0; cnt < end; cnt++) {
+    for (int64_t cnt = 0; cnt < end; cnt++) {
 
         iL = cnt;
 
-		uint64_t r = 0;
-		uint64_t c = 0;
-		uint64_t d = 0;
-		uint64_t f = 0;
+        int64_t r = 0;
+        int64_t c = 0;
+        int64_t d = 0;
+        int64_t f = 0;
 
         if (iL < end) {
             while (coefR < iL) {
@@ -205,10 +206,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 
     std::cout << "Проверка поиска соседей по размерности F" << std::endl;
 
-	uint64_t r = 2;
-	uint64_t c = 2;
-	uint64_t d = 8;
-	uint64_t f = 19;
+    int64_t r = 2;
+    int64_t c = 2;
+    int64_t d = 8;
+    int64_t f = 19;
 
     std::cout << "arr[" << r << "]["
                         << c << "]["
@@ -216,7 +217,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
                         << f << "] = "
                         << arr[r][c][d][f] << '\n';
 
-	uint64_t offset = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
+    int64_t offset = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
 
     std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
@@ -236,10 +237,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
     std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
     */
-    
+
     //[[maybe_unused]] auto [left, right] = helpers::calculateAdjacent(10, helpers::coefD);
 
-    printf("Array size = %i\n", helpers::size);
+//    printf("Array size = %lu\n", helpers::size);
     //printf("maskF = %x\n", helpers::maskF);
     //printf("maskD = %x\n", helpers::maskD);
     //printf("mraskC = %x\n", helpers::maskC);
@@ -252,118 +253,89 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 
     addr = start;
 
+    std::cout << "minF = " << helpers::minF << '\n'
+              << "maxF = " << helpers::maxF << '\n'
+              << '\n'
+              << "minD = " << helpers::minD << '\n'
+              << "maxD = " << helpers::maxD << '\n'
+              << '\n'
+              << "minC = " << helpers::minC << '\n'
+              << "maxC = " << helpers::maxC << '\n'
+              << '\n'
+              << "minR = " << helpers::minR << '\n'
+              << "maxR = " << helpers::maxR << '\n';
 
-	for (uint64_t r = 0; r < dimR; r++) {
-		for (uint64_t c = 0; c < dimC; c++) {
-			for (uint64_t d = 0; d < dimD; d++) {
-				for (uint64_t f = 0; f < dimF; f++) {
-//					printf("arr[%li][%li][%li][%li] = %li\n",r,c,d,f,arr[r][c][d][f]);
-					uint64_t offset = helpers::coefR * r +
-                                 helpers::coefC * c +
-                                 helpers::coefD * d +
-                                 helpers::coefF * f;
+    for (int64_t r = 0; r < dimR; r++) {
+        for (int64_t c = 0; c < dimC; c++) {
+            for (int64_t d = 0; d < dimD; d++) {
+                for (int64_t f = 0; f < dimF; f++) {
 
-                    //printf("addr[%li] = %i\n", offset, addr[offset]);
-
+                    int64_t offset = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
                     assert(arr[r][c][d][f] == addr[offset]);
+                    std::cout << "arr[ "
+                              << r << " ][ "
+                              << c << " ][ "
+                              << d << " ][ "
+                              << f << " ]= "
+                              << arr[r][c][d][f] << '\n';
 
                     // Check dimF
-					auto [leftF, rightF] = helpers::calculateAdjacent(offset, helpers::maskF, helpers::coefF);
+                    auto [leftF, rightF] = helpers::calculateAdjacent(offset, helpers::maskF);
 
-					// Check dimD
-					auto [leftD, rightD] = helpers::calculateAdjacent(offset, helpers::maskD, helpers::coefD);
+                    // Check dimD
+                    auto [leftD, rightD] = helpers::calculateAdjacent(offset, helpers::maskD);
 
-					// Check dimC
-					auto [leftC, rightC] = helpers::calculateAdjacent(offset, helpers::maskC, helpers::coefC);
+                    // Check dimC
+                    auto [leftC, rightC] = helpers::calculateAdjacent(offset, helpers::maskC);
 
-					// Check dimR
-					auto [leftR, rightR] = helpers::calculateAdjacent(offset, helpers::maskR, helpers::coefR);
+                    // Check dimR
+                    auto [leftR, rightR] = helpers::calculateAdjacent(offset, helpers::maskR);
 
-					uint64_t left_f  = (f == 0) ? dimF - 1 : f - 1;
-					uint64_t right_f = (f == (dimF -1)) ? 0 : f + 1;
+                    int64_t left_f  = (f == 0) ? dimF - 1 : f - 1;
+                    int64_t right_f = (f == (dimF -1)) ? 0 : f + 1;
 
-					uint64_t left_d = (d == 0) ? dimD - 1 : d - 1;
-					uint64_t right_d = (d == (dimD -1)) ? 0 : d + 1;
+                    int64_t left_d = (d == 0) ? 0 : d - 1;
+                    int64_t right_d = (d == (dimD -1)) ? dimD - 1 : d + 1;
 
-					uint64_t left_c = (c == 0) ? dimC - 1 : c - 1;
-					uint64_t right_c = (c == (dimC -1)) ? 0 : c + 1;
+                    int64_t left_c = (c == 0) ? dimC - 1 : c - 1;
+                    int64_t right_c = (c == (dimC -1)) ? 0 : c + 1;
 
-					uint64_t left_r = (r == 0) ? dimR - 1 : r - 1;
-					uint64_t right_r = (r == (dimR -1)) ? 0 : r + 1;
+                    int64_t left_r = (r == 0) ? dimR - 1 : r - 1;
+                    int64_t right_r = (r == (dimR -1)) ? 0 : r + 1;
 
-					uint64_t left_offset_f = helpers::coefR * r +
-                                        helpers::coefC * c +
-                                        helpers::coefD * d +
-                                        helpers::coefF * left_f;
+                    uint64_t left_offset_f = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * left_f;
 
-					uint64_t right_offset_f = helpers::coefR * r +
-                                         helpers::coefC * c +
-                                         helpers::coefD * d +
-                                         helpers::coefF * right_f;
+                    uint64_t right_offset_f = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * right_f;
 
-					uint64_t left_offset_d = helpers::coefR * r +
-										helpers::coefC * c +
-										helpers::coefD * left_d +
-										helpers::coefF * f;
+                    uint64_t left_offset_d = helpers::coefR * r + helpers::coefC * c + helpers::coefD * left_d + helpers::coefF * f;
 
-					uint64_t right_offset_d = helpers::coefR * r +
-										 helpers::coefC * c +
-										 helpers::coefD * right_d +
-										 helpers::coefF * f;
+                    uint64_t right_offset_d = helpers::coefR * r + helpers::coefC * c + helpers::coefD * right_d + helpers::coefF * f;
 
-					uint64_t left_offset_c = helpers::coefR * r +
-										helpers::coefC * left_c +
-										helpers::coefD * d +
-										helpers::coefF * f;
+                    uint64_t left_offset_c = helpers::coefR * r + helpers::coefC * left_c + helpers::coefD * d + helpers::coefF * f;
 
-					uint64_t right_offset_c = helpers::coefR * r +
-										 helpers::coefC * right_c +
-										 helpers::coefD * d +
-										 helpers::coefF * f;
+                    uint64_t right_offset_c = helpers::coefR * r + helpers::coefC * right_c + helpers::coefD * d + helpers::coefF * f;
 
-					uint64_t left_offset_r = helpers::coefR * left_r +
-										helpers::coefC * c +
-										helpers::coefD * d +
-										helpers::coefF * f;
+                    uint64_t left_offset_r = helpers::coefR * left_r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
 
-					uint64_t right_offset_r = helpers::coefR * right_r +
-										 helpers::coefC * c +
-										 helpers::coefD * d +
-										 helpers::coefF * f;
+                    uint64_t right_offset_r = helpers::coefR * right_r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
 
-//                    printf("r = %i\tc = %i\td = %i\tf = %i\n",r,c,d,f);
-//                    printf("r = %i\tc = %i\td = %i\tleft_f = %i\n",r,c,d,left_f);
-//                    printf("r = %i\tc = %i\td = %i\tright_f = %i\n",r,c,d,right_f);
-//                    printf("left_offset_f = %i\n", left_offset_f);
-//                    printf("right_offset_f = %i\n", right_offset_f);
-//                    printf("offset = %i\n",offset);
-//                    printf("left = %li\n", left);
-//                    printf("right = %li\n", right);
+                    assert(left_offset_f == leftF);
+                    assert(right_offset_f == rightF);
 
+                    assert(left_offset_d == leftD);
+                    assert(right_offset_d == rightD);
 
-//                    std::string ch;
+                    assert(left_offset_c == leftC);
+                    assert(right_offset_c == rightC);
 
-//                    while (std::cin >> ch) {
-//                        printf("ch = %s\n", ch.c_str());
-//                        break;
-//                    }
-
-					assert(left_offset_f == leftF);
-					assert(right_offset_f == rightF);
-
-//					assert(left_offset_d == leftD);
-//					assert(right_offset_d == rightD);
-
-//					assert(left_offset_c == leftC);
-//					assert(right_offset_c == rightC);
-
-//					assert(left_offset_r == leftR);
-					assert(right_offset_r == rightR);
-				}
+                    assert(left_offset_r == leftR);
+                    assert(right_offset_r == rightR);
+                }
             }
         }
     }
 
+    printf("Success\n");
     return 0;
 }
 

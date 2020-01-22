@@ -7,10 +7,10 @@
 
 namespace helpers {
 
-constexpr int64_t dimR = 8;
-constexpr int64_t dimC = 8;
+constexpr int64_t dimR = 4;
+constexpr int64_t dimC = 4;
 constexpr int64_t dimD = 40;
-constexpr int64_t dimF = 256;
+constexpr int64_t dimF = 32;
 
 constexpr int64_t size = dimR * dimC * dimD * dimF;
 
@@ -36,8 +36,16 @@ constexpr int64_t maxR = (dimR - 1) * coefR;
 
 void prinmsg(const std::string& msg);
 
-std::tuple<size_t, size_t> calculateAdjacent(const int64_t index,
+std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
                                              const int64_t maskN);
+
+void calculateDimIdx(int64_t index);
+
+int32_t calculateDimIdx(int32_t& r,
+						int32_t& c,
+						int32_t& d,
+						int32_t& f,
+						int64_t index);
 
 } // namespace helpers
 

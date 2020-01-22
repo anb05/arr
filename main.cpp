@@ -253,6 +253,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 
     addr = start;
 
+
+
     std::cout << "minF = " << helpers::minF << '\n'
               << "maxF = " << helpers::maxF << '\n'
               << '\n'
@@ -279,6 +281,25 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
                               << f << " ]= "
                               << arr[r][c][d][f] << '\n';
 
+					int32_t rr {0};
+					int32_t cc {0};
+					int32_t dd {0};
+					int32_t ff {0};
+					helpers::calculateDimIdx(rr,cc,dd,ff,offset);
+
+					std::cout << "arr[ "
+							  << rr << " ][ "
+							  << cc << " ][ "
+							  << dd << " ][ "
+							  << ff << " ]= "
+							  <<  '\n';
+					helpers::calculateDimIdx(offset);
+					assert(r == rr);
+					assert(c == cc);
+					assert(d == dd);
+					assert(f == ff);
+					std::cout << std::endl;
+
                     // Check dimF
                     auto [leftF, rightF] = helpers::calculateAdjacent(offset, helpers::maskF);
 
@@ -303,21 +324,21 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
                     int64_t left_r = (r == 0) ? dimR - 1 : r - 1;
                     int64_t right_r = (r == (dimR -1)) ? 0 : r + 1;
 
-                    uint64_t left_offset_f = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * left_f;
+					int64_t left_offset_f = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * left_f;
 
-                    uint64_t right_offset_f = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * right_f;
+					int64_t right_offset_f = helpers::coefR * r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * right_f;
 
-                    uint64_t left_offset_d = helpers::coefR * r + helpers::coefC * c + helpers::coefD * left_d + helpers::coefF * f;
+					int64_t left_offset_d = helpers::coefR * r + helpers::coefC * c + helpers::coefD * left_d + helpers::coefF * f;
 
-                    uint64_t right_offset_d = helpers::coefR * r + helpers::coefC * c + helpers::coefD * right_d + helpers::coefF * f;
+					int64_t right_offset_d = helpers::coefR * r + helpers::coefC * c + helpers::coefD * right_d + helpers::coefF * f;
 
-                    uint64_t left_offset_c = helpers::coefR * r + helpers::coefC * left_c + helpers::coefD * d + helpers::coefF * f;
+					int64_t left_offset_c = helpers::coefR * r + helpers::coefC * left_c + helpers::coefD * d + helpers::coefF * f;
 
-                    uint64_t right_offset_c = helpers::coefR * r + helpers::coefC * right_c + helpers::coefD * d + helpers::coefF * f;
+					int64_t right_offset_c = helpers::coefR * r + helpers::coefC * right_c + helpers::coefD * d + helpers::coefF * f;
 
-                    uint64_t left_offset_r = helpers::coefR * left_r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
+					int64_t left_offset_r = helpers::coefR * left_r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
 
-                    uint64_t right_offset_r = helpers::coefR * right_r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
+					int64_t right_offset_r = helpers::coefR * right_r + helpers::coefC * c + helpers::coefD * d + helpers::coefF * f;
 
                     assert(left_offset_f == leftF);
                     assert(right_offset_f == rightF);

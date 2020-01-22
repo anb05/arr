@@ -9,18 +9,18 @@ void prinmsg(const std::string& msg)
     std::cout << msg << std::endl;
 }
 
-std::tuple<size_t, size_t> calculateAdjacent(const int64_t index,
+std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
                                              const int64_t maskN)
 {
     int64_t left  {index};
     int64_t right {index};
 
     if (maskN == maskF) {
-        size_t var = index & maskF;
-        size_t clr = index & (~maskF);
+		int64_t var = index & maskF;
+		int64_t clr = index & (~maskF);
 
-        size_t var_l = (var - coefF) & maskF;
-        size_t var_r = (var + coefF) & maskF;
+		int64_t var_l = (var - coefF) & maskF;
+		int64_t var_r = (var + coefF) & maskF;
 
         left  = var_l | clr;
         right = var_r | clr;
@@ -108,6 +108,62 @@ std::tuple<size_t, size_t> calculateAdjacent(const int64_t index,
     }
 
     return std::make_tuple(left, right);
+}
+
+void calculateDimIdx(int64_t index)
+{
+
+	int32_t r = 0;
+	int32_t c = 0;
+	int32_t d = 0;
+	int32_t f = 0;
+
+	int64_t iL = index;
+
+	if (iL < size) {
+		while (coefR <= iL) {
+			++r;
+			iL -=coefR;
+		}
+		while (coefC <= iL) {
+			++c;
+			iL -= coefC;
+		}
+		while (coefD <= iL) {
+			++d;
+			iL -= coefD;
+		}
+		f = int32_t(iL);
+	}
+	printf("arr[ %i ][ %i ][ %i ][ %i ];\n",r,c,d,f);
+
+}
+
+int32_t calculateDimIdx(int32_t& r,
+						int32_t& c,
+						int32_t& d,
+						int32_t& f,
+						int64_t index)
+{
+	int64_t iL = index;
+
+	if (iL < size) {
+		while (coefR <= iL) {
+			++r;
+			iL -=coefR;
+		}
+		while (coefC <= iL) {
+			++c;
+			iL -= coefC;
+		}
+		while (coefD <= iL) {
+			++d;
+			iL -= coefD;
+		}
+		f = int32_t(iL);
+	}
+
+	return 0;
 }
 
 } // namespace helpers

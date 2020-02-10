@@ -115,7 +115,6 @@ std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
 
 void calculateDimIdx(int64_t index)
 {
-
 	int32_t d = 0;
 	int32_t r = 0;
 	int32_t c = 0;
@@ -232,6 +231,23 @@ std::tuple<int64_t, int64_t> calcAdjacent(const int64_t index,
 	}
 
 	return std::make_tuple(left, right);
+}
+
+void calcDimIdx( int32_t& d,
+				 int32_t& r,
+				 int32_t& c,
+				 int32_t& f,
+				 int64_t index)
+{
+	d = 0;
+	r = 0;
+	c = 0;
+	f = 0;
+
+	f = index & maskF;
+	c = (index & maskC) >> shiftRightC;
+	r = (index & maskR) >> shiftRightR;
+	d = int32_t(index  >> shiftRightD);
 }
 
 } // namespace helpers

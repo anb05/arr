@@ -4,6 +4,7 @@
 #include <string>
 #include <tuple>
 #include <cstdint>
+#include <cmath>
 
 namespace helpers {
 
@@ -21,7 +22,7 @@ constexpr int64_t coefF = 1;
 constexpr int64_t coefC = coefF * dimF;
 constexpr int64_t coefR = coefC * dimC;
 constexpr int64_t coefD = coefR * dimR;
-constexpr int64_t coefZ = coefD * dimD;
+//constexpr int64_t coefZ = coefD * dimD;
 
 constexpr int64_t maskF = (dimF - 1) * coefF;
 constexpr int64_t maskC = (dimC - 1) * coefC;
@@ -38,6 +39,15 @@ constexpr int64_t minD = coefD;
 constexpr int64_t maxD = (dimD - 1) * coefD;
 //constexpr int64_t minZ = coefZ;
 //constexpr int64_t maxZ = (dimZ - 1) * coefZ;
+
+static int32_t degreeF = int32_t(std::log10(dimF) / std::log10(2));
+static int32_t degreeC = int32_t(std::log10(dimC) / std::log10(2));
+static int32_t degreeR = int32_t(std::log10(dimR) / std::log10(2));
+static int32_t degreeD = int32_t(std::log10(dimD) / std::log10(2));
+
+static int32_t shiftRightC = degreeF;
+static int32_t shiftRightR = degreeF + degreeC;
+static int32_t shiftRightD = degreeF + degreeC + degreeR;
 
 
 void print_msg(const std::string& msg);
@@ -56,6 +66,12 @@ int32_t calculateDimIdx( int32_t& d,
 						 int32_t& c,
 						 int32_t& f,
 						 int64_t index);
+
+void calcDimIdx( int32_t& d,
+				 int32_t& r,
+				 int32_t& c,
+				 int32_t& f,
+				 int64_t index);
 
 } // namespace helpers
 

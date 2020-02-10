@@ -74,7 +74,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 
     std::cout << "Проверка поиска соседей в четырёхмерном массиве по каждой размерности" << std::endl;
 
-    addr = start;
+	addr = start;
 
 	std::cout << "minD = " << helpers::minD << '\n'
 			  << "maxD = " << helpers::maxD << '\n'
@@ -114,11 +114,22 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
 							  << cc << " ][ "
 							  << ff << " ]= "
 							  <<  '\n';
-					helpers::calculateDimIdx(offset);
+//					helpers::calculateDimIdx(offset);
 					assert(d == dd);
 					assert(r == rr);
 					assert(c == cc);
 					assert(f == ff);
+
+					int32_t ddd {0};
+					int32_t rrr {0};
+					int32_t ccc {0};
+					int32_t fff {0};
+					helpers::calcDimIdx(ddd,rrr,ccc,fff,offset);
+					assert(d == ddd);
+					assert(r == rrr);
+					assert(c == ccc);
+					assert(f == fff);
+
 					std::cout << std::endl;
 
                     // Check dimF

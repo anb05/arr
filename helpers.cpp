@@ -4,13 +4,16 @@
 
 namespace helpers {
 
-void prinmsg(const std::string& msg)
+void print_msg(const std::string& msg)
 {
     std::cout << msg << std::endl;
 }
 
+// НЕ ИСПОЛЬЗОВАТЬ
+// Старый вариант с перепутанными размерностями, но общими подходами.
+// Сделать ПОЛНОЕ Описание и перенести на бумагу !!!!.
 std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
-                                             const int64_t maskN)
+											   const int64_t maskN)
 {
     int64_t left  {index};
     int64_t right {index};
@@ -28,36 +31,36 @@ std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
         return std::make_tuple(left, right);
     }
 
-    if (maskN == maskD) {
-        right = index + coefD;
-        left = index - coefD;
+	if (maskN == maskD) {
+		right = index + coefD;
+		left = index - coefD;
 
-        if (left < 0) {
-            left = index;
-            return std::make_tuple(left, right);
-        }
+		if (left < 0) {
+			left = index;
+			return std::make_tuple(left, right);
+		}
 
-        if (size <= right) {
-            right = index;
-            return std::make_tuple(left, right);
-        }
+		if (size <= right) {
+			right = index;
+			return std::make_tuple(left, right);
+		}
 
-        int64_t fraction = index / minC;
-        int64_t fractionR = right / minC;
+		int64_t fraction = index / minC;
+		int64_t fractionR = right / minC;
 
-        if (fraction != fractionR) {
-            right = index;
-            return std::make_tuple(left, right);
-        }
+		if (fraction != fractionR) {
+			right = index;
+			return std::make_tuple(left, right);
+		}
 
-        int64_t fractionL = left / minC;
-        if (fraction != fractionL) {
-            left = index;
-            return std::make_tuple(left, right);
-        }
+		int64_t fractionL = left / minC;
+		if (fraction != fractionL) {
+			left = index;
+			return std::make_tuple(left, right);
+		}
 
-        return std::make_tuple(left, right);
-    }
+		return std::make_tuple(left, right);
+	}
 
     if (maskN == maskC) {
         right = index + coefC;
@@ -107,20 +110,24 @@ std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
         return std::make_tuple(left, right);
     }
 
-    return std::make_tuple(left, right);
+	return std::make_tuple(left, right);
 }
 
 void calculateDimIdx(int64_t index)
 {
 
+	int32_t d = 0;
 	int32_t r = 0;
 	int32_t c = 0;
-	int32_t d = 0;
 	int32_t f = 0;
 
 	int64_t iL = index;
 
 	if (iL < size) {
+		while (coefD <= iL) {
+			++d;
+			iL -= coefD;
+		}
 		while (coefR <= iL) {
 			++r;
 			iL -=coefR;
@@ -129,25 +136,25 @@ void calculateDimIdx(int64_t index)
 			++c;
 			iL -= coefC;
 		}
-		while (coefD <= iL) {
-			++d;
-			iL -= coefD;
-		}
 		f = int32_t(iL);
 	}
-	printf("arr[ %i ][ %i ][ %i ][ %i ];\n",r,c,d,f);
+	printf("arr[ %i ][ %i ][ %i ][ %i ];\n",d,r,c,f);
 
 }
 
-int32_t calculateDimIdx(int32_t& r,
-						int32_t& c,
-						int32_t& d,
-						int32_t& f,
-						int64_t index)
+int32_t calculateDimIdx( int32_t& d,
+						 int32_t& r,
+						 int32_t& c,
+						 int32_t& f,
+						 int64_t index)
 {
 	int64_t iL = index;
 
 	if (iL < size) {
+		while (coefD <= iL) {
+			++d;
+			iL -= coefD;
+		}
 		while (coefR <= iL) {
 			++r;
 			iL -=coefR;
@@ -155,15 +162,76 @@ int32_t calculateDimIdx(int32_t& r,
 		while (coefC <= iL) {
 			++c;
 			iL -= coefC;
-		}
-		while (coefD <= iL) {
-			++d;
-			iL -= coefD;
 		}
 		f = int32_t(iL);
 	}
 
 	return 0;
+}
+
+std::tuple<int64_t, int64_t> calcAdjacent(const int64_t index,
+									  const int32_t dim/*подавать маску*/)
+{
+	int64_t left  {index};
+	int64_t right {index};
+	const int64_t maskN {dim};
+
+	if (maskN == maskF) {
+		int64_t var = index & maskF;
+		int64_t clr = index & (~maskF);
+
+		int64_t var_l = (var - coefF) & maskF;
+		int64_t var_r = (var + coefF) & maskF;
+
+		left  = var_l | clr;
+		right = var_r | clr;
+
+		return std::make_tuple(left, right);
+	}
+
+	if (maskN == maskC) {
+		int64_t var = index & maskC;
+		int64_t clr = index & (~maskC);
+
+		int64_t var_l = (var - coefC) & maskC;
+		int64_t var_r = (var + coefC) & maskC;
+
+		left  = var_l | clr;
+		right = var_r | clr;
+
+		return std::make_tuple(left, right);
+	}
+
+	if (maskN == maskR) {
+		int64_t var = index & maskR;
+		int64_t clr = index & (~maskR);
+
+		int64_t var_l = (var - coefR) & maskR;
+		int64_t var_r = (var + coefR) & maskR;
+
+		left  = var_l | clr;
+		right = var_r | clr;
+
+		return std::make_tuple(left, right);
+	}
+
+	if (maskN == maskD) {
+		right = index + coefD;
+
+		if (size <= right) {
+			right = index;
+			left = index - coefD;
+			return std::make_tuple(left, right);
+		}
+		if (index < coefD) {
+			left = index;
+			return std::make_tuple(left, right);
+		}
+		left = index - coefD;
+		return std::make_tuple(left, right);
+	}
+
+	return std::make_tuple(left, right);
 }
 
 } // namespace helpers

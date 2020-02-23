@@ -54,25 +54,27 @@ void print_msg(const std::string& msg);
 
 // Старый вариант с перепутанными размерностями.
 std::tuple<int64_t, int64_t> calculateAdjacent(const int64_t index,
-											   const int64_t maskN);
+                                               const int64_t maskN);
 
 std::tuple<int64_t, int64_t> calcAdjacent(const int64_t index,
-										  const int32_t dim);
+                                          const int32_t dim);
 
 void calculateDimIdx(int64_t index);
 
 int32_t calculateDimIdx( int32_t& d,
-						 int32_t& r,
-						 int32_t& c,
-						 int32_t& f,
-						 int64_t index);
+                         int32_t& r,
+                         int32_t& c,
+                         int32_t& f,
+                         int64_t index);
 
 void calcDimIdx( int32_t& d,
-				 int32_t& r,
-				 int32_t& c,
-				 int32_t& f,
-				 int64_t index);
+                 int32_t& r,
+                 int32_t& c,
+                 int32_t& f,
+                 int64_t index);
 
+
+std::tuple<int32_t, int32_t, int32_t, int32_t> calcDimIdx(int64_t idx);
 } // namespace helpers
 
 #endif
